@@ -30,7 +30,7 @@ export class OrderService {
 
         return {
             list_orders: orders,
-            last_modified: lastModifiedOrder.updateTimestamp
+            last_modified: lastModifiedOrder?.updateTimestamp
         };
     }
 
@@ -100,18 +100,18 @@ export class OrderService {
         );
     }
 
-    add(dto: CreateOrderDto): Order {
+    add(dto: CreateOrderDto, userId: number): Order {
         const order = new Order();
         order.name = dto.name;
         order.address = dto.address;
         order.price = dto.price;
-        order.createdBy = ADMIN;
+        order.createdBy = userId;
         order.nmbr = Math.random().toString(36).substring(2, 6) + Math.random().toString(36).substring(2, 6);
         this.orderRepository.insert(order);
         return order;
     }
 
-    doPayment(order: Order) {
+    doPayment(order: Order, userId: number) {
         const self = this;
         const http = require('http');
         const data = JSON.stringify({
@@ -119,9 +119,8 @@ export class OrderService {
             address: order.address,
             price: order.price,
             orderNumber: order.nmbr,
-            createdBy: ADMIN,
+            createdBy: userId,
         });
-
         const options = {
             hostname: 'payments.local',
             port: 3001,

@@ -5,7 +5,7 @@ const getListOrders = async () => {
 };
 
 const getDetailOrder = async (id: string) => {
-    return axiosClient.get(`/order/${id}`);
+    return axiosClient.get(`/order/detail/${id}`);
 };
 
 const createOrder = async (data: Object): Promise<> => {

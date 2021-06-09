@@ -4,6 +4,8 @@ import ModalCreateOrder from "./Modal/ModalCreateOrder";
 import orderAPI from "../../api/orderAPI";
 import OrderDetail from "./OrderDetail";
 import { Route, NavLink } from "react-router-dom";
+import { removeToken } from '../../utils/common';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 export default class ListOrders extends Component {
   constructor(props) {
@@ -125,6 +127,11 @@ export default class ListOrders extends Component {
     this.props.show = false;
   };
 
+  logout = () => {
+    removeToken();
+    window.location.reload();
+  }
+
   render() {
     var { match } = this.props;
     console.log(match, "match");
@@ -139,9 +146,12 @@ export default class ListOrders extends Component {
         />
         <div className="flex justify-between items-center mb-4">
           <span className="font-bold text-3xl text-gray-600">List Orders</span>
-          <Button variant="primary" onClick={this.showModalCreateOrder}>
-            Create Order
-          </Button>
+          <div className="d-flex">
+            <Button variant="primary" onClick={this.showModalCreateOrder} className="mr-6">
+              Create Order
+            </Button>
+            <FaSignOutAlt className="text-3xl ml-6 mt-1 cursor-pointer" onClick={this.logout}/>
+          </div>
         </div>
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

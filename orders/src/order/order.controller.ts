@@ -1,29 +1,30 @@
-import { Controller, Body, Param, Get, Post, Put, Query, UseGuards, Request } from '@nestjs/common';
+import { Controller, Body, Param, Get, Post, Put, Query, UseGuards, Request, Req } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiBody, ApiCreatedResponse, ApiParam, ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
-
+import { getUserId } from 'src/auth/utils/common';
+import { User } from 'src/auth/dto/user.decorator';
 
 @Controller('order')
 @ApiTags('orders')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiOperation({
     operationId: 'indexOrder',
     summary: 'Get list of transactions',
     description: 'Get list of transactions for the user',
   })
-  findAll(@Request() req) {
-    const userId = req.user.username === 'admin' ? 1 : null;
+  findAll(@User() user: any) {
+    const userId = getUserId(user?.username);
     return this.orderService.findAll(userId);
   }
 
-  @Get('/:id')
+  @Get('/detail/:id')
   @ApiOperation({
     operationId: 'readOrder',
     summary: 'Read order',
@@ -47,15 +48,16 @@ export class OrderController {
     type: CreateOrderDto,
     description: 'Create order'
   })
-  create(@Body() dto: CreateOrderDto) {
-    const order = this.orderService.add(dto);
+  create(@Body() dto: CreateOrderDto, @User() user: any, @Req() req: any) {
+    const userId = getUserId(user?.username);
+    const order = this.orderService.add(dto, userId);
     setTimeout(() => {
-      this.orderService.doPayment(order);
+      this.orderService.doPayment(order, userId);
     }, 3000);
+
     return order;
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     operationId: 'cancelOrder',
     summary: 'Cancel order',

@@ -12,7 +12,6 @@ export class CreatePaymentDto {
     readonly address: string;
 
     @ApiProperty()
-    @IsInt()
     readonly price: number;
 
     @ApiProperty()

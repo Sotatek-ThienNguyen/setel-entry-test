@@ -12,6 +12,7 @@ import {
   import { JwtPayload } from './interfaces/payload.interface';
   import { AuthGuard } from '@nestjs/passport';
   import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { User } from './dto/user.decorator';
 
 @Controller('auth')
 @ApiTags('auths')
@@ -27,7 +28,7 @@ export class AuthController {
   @Get('whoami')
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
-  public async testAuth(@Req() req: any): Promise<JwtPayload> {
-    return req.user;
+  public async testAuth(@User() user: any): Promise<JwtPayload> {
+    return user;
   }
 }
