@@ -15,16 +15,29 @@ Please follow these steps
     ```
     make up
     ```
-3. Get auth token
-
-    Go to `http://localhost:3000/api/#/auths/AuthController_login` and input login data:
-    ```
+3. Data Login
+   ```
     {
-      "username": "admin",
-      "password": "1"
-    }
-    ```
-    then pass auth token to entry-test-setel/web/src/api/constant.js
+        username: 'admin',
+        password: '1'
+    },
+    {
+        username: 'admin1',
+        password: '1'
+    },
+    {
+        username: 'admin2',
+        password: '1'
+    },
+    {
+        username: 'admin3',
+        password: '1'
+    },
+    {
+        username: 'admin4',
+        password: '1'
+    },
+   ```
 
 ## Tests
 
