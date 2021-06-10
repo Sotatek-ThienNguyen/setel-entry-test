@@ -1,4 +1,4 @@
-import {Column, JoinColumn, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
 export enum Status {
     CREATED = 'created',

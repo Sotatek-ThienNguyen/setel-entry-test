@@ -48,7 +48,7 @@ export class OrderController {
     type: CreateOrderDto,
     description: 'Create order'
   })
-  create(@Body() dto: CreateOrderDto, @User() user: any, @Req() req: any) {
+  create(@Body() dto: CreateOrderDto, @User() user: any) {
     const userId = getUserId(user?.username);
     const order = this.orderService.add(dto, userId);
     setTimeout(() => {

@@ -8,7 +8,6 @@ const whoami = async () => {
     return axiosClient.get(`auth/whoami`);
 };
 
-
 const userAPI = {
     login,
     whoami

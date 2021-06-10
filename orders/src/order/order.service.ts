@@ -4,7 +4,7 @@ import { Repository, UpdateResult } from 'typeorm';
 import { Order, Status } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { TIME_TO_DELIVERY, ADMIN } from '../constants/order_constants';
+import { TIME_TO_DELIVERY } from '../constants/order_constants';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 @Injectable()
